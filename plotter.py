@@ -74,7 +74,7 @@ pd_ben['timestamp'] = pd_ben['timestamp'] - pd_ben['timestamp'][0]
 # merge the two dataframes, after changing the column names
 # atk: x,y,z > atk_x, atk_y, atk_z | ben: x,y,z > ben_x, ben_y, ben_z
 pd_merged = pd.DataFrame()
-pd_merged['timestamp'] = pd_atk['timestamp']
+pd_merged['timestamp'] = pd_atk['timestamp']/1000000
 pd_merged['atk_x'] = pd_atk['x']
 pd_merged['atk_y'] = pd_atk['y']
 pd_merged['atk_z'] = pd_atk['z']
@@ -85,27 +85,38 @@ print(pd_merged.head())
 
 # AREA: plot
 
-fig = plt.figure(figsize=(30, 10))
+plt.figure(figsize=(20, 10))
 plt.title(f"{args.file} -a {args.attack} -b {args.benign}")
-plt.subplot(3, 1, 1)
 plt.plot(pd_merged['timestamp'], pd_merged['atk_x'], color='red', label='attacked')
 plt.plot(pd_merged['timestamp'], pd_merged['ben_x'], color='green', label='benign')
+# edit: show only 3 std range of data
+plt.ylim(pd_merged['atk_x'].mean() - 3 * pd_merged['atk_x'].std(), pd_merged['atk_x'].mean() + 3 * pd_merged['atk_x'].std())
 plt.legend(loc='upper right')
-plt.xlabel('time')
-plt.ylabel('accel_x')
-plt.subplot(3, 1, 2)
+plt.xlabel('time [s]')
+plt.ylabel('accel_x [m/s^2]')
+plt.savefig(f"{args.file}-{args.attack[2:]}-{args.benign[2:]}_x.png")
+
+plt.figure(figsize=(20, 10))
+plt.title(f"{args.file} -a {args.attack} -b {args.benign}")
 plt.plot(pd_merged['timestamp'], pd_merged['atk_y'], color='red', label='attacked')
 plt.plot(pd_merged['timestamp'], pd_merged['ben_y'], color='green', label='benign')
+# edit: show only 3 std range of data
+plt.ylim(pd_merged['atk_y'].mean() - 3 * pd_merged['atk_y'].std(), pd_merged['atk_y'].mean() + 3 * pd_merged['atk_y'].std())
 plt.legend(loc='upper right')
-plt.xlabel('time')
-plt.ylabel('accel_y')
-plt.subplot(3, 1, 3)
+plt.xlabel('time [s]')
+plt.ylabel('accel_y [m/s^2]')
+plt.savefig(f"{args.file}-{args.attack[2:]}-{args.benign[2:]}_y.png")
+
+plt.figure(figsize=(20, 10))
+plt.title(f"{args.file} -a {args.attack} -b {args.benign}")
 plt.plot(pd_merged['timestamp'], pd_merged['atk_z'], color='red', label='attacked')
 plt.plot(pd_merged['timestamp'], pd_merged['ben_z'], color='green', label='benign')
+# edit: show only 3 std range of data
+plt.xlim(20,30)
+plt.ylim(pd_merged['atk_z'].mean() - 0.5 * pd_merged['atk_z'].std(), pd_merged['atk_z'].mean() + 0.5 * pd_merged['atk_z'].std())
 plt.legend(loc='upper right')
-plt.xlabel('time')
-plt.ylabel('accel_z')
+plt.xlabel('time [s]')
+plt.ylabel('accel_z [m/s^2]')
+plt.savefig(f"{args.file}-{args.attack[2:]}-{args.benign[2:]}_z.png")
 
-
-plt.savefig(f"{args.file}-{args.attack[2:]}-{args.benign[2:]}.png")
-plt.show()
+# plt.show()
