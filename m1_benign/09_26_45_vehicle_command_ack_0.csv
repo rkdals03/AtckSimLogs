@@ -1,0 +1,4 @@
+timestamp,command,result_param2,result,result_param1,target_system,target_component,from_external
+29412000,176,0,0,0,255,190,0
+30408000,400,0,0,0,255,190,0
+95700000,20,0,0,0,1,1,0
