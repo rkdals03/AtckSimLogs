@@ -68,8 +68,10 @@ print(pd_ben.head())
 
 # AREA: merge data
 # reset timestamp to start from 0
-pd_atk['timestamp'] = pd_atk['timestamp'] - pd_atk['timestamp'][0]
-pd_ben['timestamp'] = pd_ben['timestamp'] - pd_ben['timestamp'][0]
+# pd_atk['timestamp'] = pd_atk['timestamp'] - pd_atk['timestamp'][0]
+# pd_ben['timestamp'] = pd_ben['timestamp'] - pd_ben['timestamp'][0]
+pd_atk['timestamp'] = pd_atk['timestamp'] - 0
+pd_ben['timestamp'] = pd_ben['timestamp'] - 0
 
 # merge the two dataframes, after changing the column names
 # atk: x,y,z > atk_x, atk_y, atk_z | ben: x,y,z > ben_x, ben_y, ben_z
@@ -91,9 +93,17 @@ plt.plot(pd_merged['timestamp'], pd_merged['atk_x'], color='red', label='attacke
 plt.plot(pd_merged['timestamp'], pd_merged['ben_x'], color='green', label='benign')
 # edit: show only 3 std range of data
 plt.ylim(pd_merged['atk_x'].mean() - 3 * pd_merged['atk_x'].std(), pd_merged['atk_x'].mean() + 3 * pd_merged['atk_x'].std())
+# plt.xlim(0,60)
 plt.legend(loc='upper right')
 plt.xlabel('time [s]')
 plt.ylabel('accel_x [m/s^2]')
+# plot vertical lines at 20,30,50,60,80,90
+plt.axvline(x=20, color='black', linestyle='--')
+plt.axvline(x=30, color='black', linestyle='--')
+plt.axvline(x=50, color='black', linestyle='--')
+plt.axvline(x=60, color='black', linestyle='--')
+# plt.axvline(x=80, color='black', linestyle='--')
+# plt.axvline(x=90, color='black', linestyle='--')
 plt.savefig(f"{args.file}-{args.attack[2:]}-{args.benign[2:]}_x.png")
 
 plt.figure(figsize=(20, 10))
@@ -101,7 +111,12 @@ plt.title(f"{args.file} -a {args.attack} -b {args.benign}")
 plt.plot(pd_merged['timestamp'], pd_merged['atk_y'], color='red', label='attacked')
 plt.plot(pd_merged['timestamp'], pd_merged['ben_y'], color='green', label='benign')
 # edit: show only 3 std range of data
-plt.ylim(pd_merged['atk_y'].mean() - 3 * pd_merged['atk_y'].std(), pd_merged['atk_y'].mean() + 3 * pd_merged['atk_y'].std())
+# plt.ylim(pd_merged['atk_y'].mean() - 5 * pd_merged['atk_y'].std(), pd_merged['atk_y'].mean() + 5 * pd_merged['atk_y'].std())
+plt.xlim(0,60)
+plt.axvline(x=20, color='black', linestyle='--')
+plt.axvline(x=30, color='black', linestyle='--')
+plt.axvline(x=50, color='black', linestyle='--')
+plt.axvline(x=60, color='black', linestyle='--')
 plt.legend(loc='upper right')
 plt.xlabel('time [s]')
 plt.ylabel('accel_y [m/s^2]')
@@ -112,8 +127,12 @@ plt.title(f"{args.file} -a {args.attack} -b {args.benign}")
 plt.plot(pd_merged['timestamp'], pd_merged['atk_z'], color='red', label='attacked')
 plt.plot(pd_merged['timestamp'], pd_merged['ben_z'], color='green', label='benign')
 # edit: show only 3 std range of data
-plt.xlim(20,30)
-plt.ylim(pd_merged['atk_z'].mean() - 0.5 * pd_merged['atk_z'].std(), pd_merged['atk_z'].mean() + 0.5 * pd_merged['atk_z'].std())
+plt.xlim(0,60)
+plt.axvline(x=20, color='black', linestyle='--')
+plt.axvline(x=30, color='black', linestyle='--')
+plt.axvline(x=50, color='black', linestyle='--')
+plt.axvline(x=60, color='black', linestyle='--')
+# plt.ylim(pd_merged['atk_z'].mean() - 0.5 * pd_merged['atk_z'].std(), pd_merged['atk_z'].mean() + 0.5 * pd_merged['atk_z'].std())
 plt.legend(loc='upper right')
 plt.xlabel('time [s]')
 plt.ylabel('accel_z [m/s^2]')
