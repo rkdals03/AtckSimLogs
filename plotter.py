@@ -20,6 +20,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument("file", help="file to read")
 parser.add_argument("-a", "--attack", help="attack folder to read from")
 parser.add_argument("-b", "--benign", help="benign folder to read from")
+parser.add_argument("-m","--marker", help="")
+parser.add_arguemtn("-r","--range", nargs = 4 ,type = float, help="[x-min, x-max, y-min, y-max] x,y, area setting")
+
 args = parser.parse_args()
 
 # AREA: read attacked data
