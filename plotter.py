@@ -83,7 +83,7 @@ pd_merged['atk_z'] = pd_atk['z']
 pd_merged['ben_x'] = pd_ben['x']
 pd_merged['ben_y'] = pd_ben['y']
 pd_merged['ben_z'] = pd_ben['z']
-print(pd_merged.head())
+print(pd_merged)
 
 # AREA: plot
 
@@ -155,5 +155,22 @@ plt.legend(loc='upper right')
 plt.xlabel('time [s]')
 plt.ylabel('accel_z [m/s^2]')
 plt.savefig(f"{args.file}-{args.attack[2:]}-{args.benign[2:]}_z.png")
+
+
+# x-y plane plot
+plt.figure(figsize=(10, 10))
+plt.title(f"{args.file} -a {args.attack} -b {args.benign} X-Y plane")
+plt.plot(pd_merged['ben_x'], pd_merged['ben_y'], color='green', label='benign')
+plt.plot(pd_merged['atk_x'], pd_merged['atk_y'], color='red', label='attacked')
+# TODO: plot points at 20,30,50,60,80,90 second of attacked data
+# plt.scatter(pd_merged['atk_x'][20], pd_merged['atk_y'][20], color='black', marker='x')
+""" atcked_datas = pd_merged.where(((pd_merged['timestamp'] >= 20) & (pd_merged['timestamp'] < 30))
+                                | ((pd_merged['timestamp'] >= 50) & (pd_merged['timestamp'] < 60)
+                                | ((pd_merged['timestamp'] >= 80) & (pd_merged['timestamp'] < 90)))).dropna()
+plt.scatter(atcked_datas['atk_x'], atcked_datas['atk_y'], color='blue', marker='.', label='attacked') """
+plt.legend(loc='upper right')
+plt.xlabel('x [m/s^2]')
+plt.ylabel('y [m/s^2]')
+plt.savefig(f"{args.file}-{args.attack[2:]}-{args.benign[2:]}_xy.png")
 
 # plt.show()
